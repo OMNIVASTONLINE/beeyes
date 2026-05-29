@@ -8,7 +8,7 @@ export default function SignupPage() {
   const router = useRouter();
   const { login } = useAuth();
 
-  const handleSignup = (_email: string) => {
+  const handleSignup = (_: string) => {
     login();
     setTimeout(() => {
       router.push("/membership");
