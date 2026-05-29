@@ -41,7 +41,7 @@ export default function HomePage() {
     }, 100);
   };
 
-  const handleSignup = (_: string) => {
+  const handleSignup = () => {
     login();
     setShowSignup(false);
     setShowMembership(true);
