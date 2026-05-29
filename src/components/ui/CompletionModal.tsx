@@ -44,7 +44,7 @@ function ConfettiEffect() {
   );
 }
 
-export default function CompletionModal({ show, score, total, onContinue }: CompletionModalProps) {
+export default function CompletionModal({ show, onContinue }: CompletionModalProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
