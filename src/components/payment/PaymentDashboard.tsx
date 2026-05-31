@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import MembersOnlyModal from "@/components/ui/MembersOnlyModal";
+import { useAuth } from "@/contexts/AuthContext";
 
 const cryptoCurrencies = [
   { symbol: "BTC", name: "Bitcoin", icon: "₿", color: "#f7931a" },
@@ -27,30 +28,28 @@ const paymentProviders = [
 
 const sidebarItems = [
   { label: "Profile", icon: "👤" },
+  { label: "Deposit", icon: "💳" },
+  { label: "Withdraw", icon: "💰" },
   { label: "Bonuses", icon: "🎁" },
   { label: "VIP Club", icon: "👑" },
-  { label: "Transactions", icon: "💳" },
-  { label: "Settings", icon: "⚙️" },
-];
-
-const depositHistory = [
-  { date: "2024-01-15", amount: "0.05 BTC", status: "Completed", statusColor: "#00BFFF" },
-  { date: "2024-01-12", amount: "0.5 ETH", status: "Completed", statusColor: "#00BFFF" },
-  { date: "2024-01-08", amount: "500 USDT", status: "Pending", statusColor: "#E91E78" },
-  { date: "2024-01-05", amount: "1.2 SOL", status: "Completed", statusColor: "#00BFFF" },
-  { date: "2024-01-02", amount: "0.1 BTC", status: "Completed", statusColor: "#00BFFF" },
+  { label: "Transactions", icon: "📋" },
 ];
 
 const isMember = false;
 
-const memberOnlyItems = ["Profile", "Bonuses", "VIP Club", "Transactions", "Settings"];
+const memberOnlyItems = ["Profile", "Withdraw", "Bonuses", "VIP Club", "Transactions"];
 
-export default function PaymentDashboard() {
+interface PaymentDashboardProps {
+  onPaymentComplete?: () => void;
+}
+
+export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboardProps) {
+  const { user, profile } = useAuth();
   const [activeTab, setActiveTab] = useState<"crypto" | "card">("crypto");
   const [selectedCrypto, setSelectedCrypto] = useState(cryptoCurrencies[0]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState(paymentProviders[0]);
-  const [activeSidebar, setActiveSidebar] = useState("Profile");
+  const [activeSidebar, setActiveSidebar] = useState("Deposit");
   const [showMemberModal, setShowMemberModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [confirmEmail, setConfirmEmail] = useState("");
@@ -73,59 +72,70 @@ export default function PaymentDashboard() {
 
   const walletAddress = useMemo(() => walletAddresses[selectedCrypto.symbol], [selectedCrypto]);
 
-return (
+  return (
     <>
     <div className="container-fluid px-0" style={{ background: "#0D1B2A" }}>
       <div className="row g-0">
-         {/* Sidebar */}
-         <div className="col-lg-2 d-none d-lg-block" style={{ background: "#0A1628", borderRight: "1px solid rgba(0,191,255,0.1)", minHeight: "600px" }}>
-          <div className="p-3 pt-4">
-            {sidebarItems.map((item) => (
-              <button
-                key={item.label}
-                className="d-flex align-items-center gap-3 w-100 p-3 rounded-3 mb-1"
-                onClick={() => {
-                  if (!isMember && memberOnlyItems.includes(item.label)) {
-                    setShowMemberModal(true);
-                  } else {
-                    setActiveSidebar(item.label);
-                  }
-                }}
-                style={{
-                  background: activeSidebar === item.label ? "rgba(0,212,255,0.1)" : "transparent",
-                  border: "none",
-                  color: activeSidebar === item.label ? "#00BFFF" : "#87DEFA",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  fontSize: "0.9rem",
-                }}
-                onMouseEnter={(e) => {
-                  if (activeSidebar !== item.label)
-                    (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)";
-                }}
-                onMouseLeave={(e) => {
-                  if (activeSidebar !== item.label)
-                    (e.currentTarget as HTMLElement).style.background = "transparent";
-                }}
-              >
-                <span style={{ fontSize: "1.2rem" }}>{item.icon}</span>
-                {item.label}
-              </button>
-            ))}
+        {/* Sidebar */}
+        <div className="col-lg-2 d-none d-lg-flex flex-column" style={{ background: "#0A1628", borderRight: "1px solid rgba(0,191,255,0.1)", minHeight: "calc(100dvh - 72px)" }}>
+          <div className="p-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <div style={{ color: "#87DEFA", fontSize: "0.75rem", marginBottom: "2px" }}>Account</div>
+            <div style={{ color: "#fff", fontSize: "0.85rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {profile?.display_name || user?.email}
+            </div>
+          </div>
+          <div className="p-2 pt-3 flex-grow-1">
+            {sidebarItems.map((item) => {
+              const isDeposit = item.label === "Deposit";
+              const isDisabled = !isDeposit && !isMember && memberOnlyItems.includes(item.label);
+              return (
+                <button
+                  key={item.label}
+                  className="d-flex align-items-center gap-2 w-100 p-2 rounded-3 mb-0"
+                  onClick={() => {
+                    if (isDisabled) {
+                      setShowMemberModal(true);
+                    } else {
+                      setActiveSidebar(item.label);
+                    }
+                  }}
+                  style={{
+                    background: activeSidebar === item.label ? "rgba(0,212,255,0.1)" : "transparent",
+                    border: "none",
+                    color: activeSidebar === item.label ? "#00BFFF" : "#87DEFA",
+                    cursor: isDisabled ? "pointer" : "pointer",
+                    transition: "all 0.3s ease",
+                    fontSize: "0.9rem",
+                    opacity: isDisabled ? 0.6 : 1,
+                  }}
+                  onMouseEnter={(e) => {
+                    if (activeSidebar !== item.label)
+                      (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (activeSidebar !== item.label)
+                      (e.currentTarget as HTMLElement).style.background = "transparent";
+                  }}
+                >
+                  <span style={{ fontSize: "1rem" }}>{item.icon}</span>
+                  <span style={{ fontSize: "0.85rem" }}>{item.label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="col-lg-10 p-3 p-md-4 p-lg-5">
-          <h3 className="fw-bold mb-1">
+        <div className="col-lg-10 p-3 p-md-3 p-lg-4" style={{ minHeight: "calc(100dvh - 72px)" }}>
+          <h3 className="fw-bold mb-0" style={{ fontSize: "1.3rem" }}>
             <span className="neon-text">Deposit</span>
           </h3>
-          <p className="mb-4" style={{ color: "#87DEFA", fontSize: "0.9rem" }}>
+          <p className="mb-3" style={{ color: "#87DEFA", fontSize: "0.85rem" }}>
             Fund your account to unlock premium features
           </p>
 
           {/* Tabs */}
-          <div className="d-flex gap-2 mb-4">
+          <div className="d-flex gap-2 mb-3">
             <button
               className="btn rounded-pill px-4 py-2"
               onClick={() => setActiveTab("crypto")}
@@ -156,16 +166,16 @@ return (
             </button>
           </div>
 
-          <div className="row g-4">
-            {/* Left - Crypto Select */}
-            <div className="col-lg-7">
-              <div className="glass-card p-4" style={{ borderRadius: "20px" }}>
-                <h5 className="fw-bold mb-3" style={{ color: "#fff", fontSize: "0.95rem" }}>Select Cryptocurrency</h5>
+          {/* Deposit Card */}
+          <div className="glass-card p-3 p-md-4" style={{ borderRadius: "16px" }}>
+            <div className="row g-3 align-items-start">
+              {/* Left: Crypto Selection + Providers */}
+              <div className="col-md-7">
+                <h5 className="fw-bold mb-2" style={{ color: "#fff", fontSize: "0.85rem" }}>Select Cryptocurrency</h5>
 
-                {/* Dropdown */}
-                <div className="position-relative mb-4">
+                <div className="position-relative mb-3">
                   <button
-                    className="d-flex align-items-center justify-content-between w-100 p-3 rounded-3"
+                    className="d-flex align-items-center justify-content-between w-100 p-2 rounded-3"
                     onClick={() => setShowDropdown(!showDropdown)}
                     style={{
                       background: "rgba(255,255,255,0.05)",
@@ -176,16 +186,10 @@ return (
                   >
                     <div className="d-flex align-items-center gap-3">
                       <span style={{
-                        width: 36,
-                        height: 36,
-                        borderRadius: "50%",
-                        background: `${selectedCrypto.color}20`,
-                        color: selectedCrypto.color,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontWeight: 700,
-                        fontSize: "1.1rem",
+                        width: 36, height: 36, borderRadius: "50%",
+                        background: `${selectedCrypto.color}20`, color: selectedCrypto.color,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontWeight: 700, fontSize: "1.1rem",
                       }}>
                         {selectedCrypto.icon}
                       </span>
@@ -214,10 +218,7 @@ return (
                           onClick={() => { setSelectedCrypto(crypto); setShowDropdown(false); }}
                           style={{
                             background: selectedCrypto.symbol === crypto.symbol ? "rgba(0,191,255,0.1)" : "transparent",
-                            border: "none",
-                            color: "#fff",
-                            cursor: "pointer",
-                            transition: "0.2s",
+                            border: "none", color: "#fff", cursor: "pointer", transition: "0.2s",
                           }}
                           onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = "rgba(0,191,255,0.05)"}
                           onMouseLeave={(e) => {
@@ -226,14 +227,9 @@ return (
                           }}
                         >
                           <span style={{
-                            width: 32,
-                            height: 32,
-                            borderRadius: "50%",
-                            background: `${crypto.color}20`,
-                            color: crypto.color,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
+                            width: 32, height: 32, borderRadius: "50%",
+                            background: `${crypto.color}20`, color: crypto.color,
+                            display: "flex", alignItems: "center", justifyContent: "center",
                             fontWeight: 700,
                           }}>
                             {crypto.icon}
@@ -248,26 +244,18 @@ return (
                   )}
                 </div>
 
-                {/* Payment Providers */}
-                <h5 className="fw-bold mb-3" style={{ color: "#fff", fontSize: "0.95rem" }}>Payment Provider</h5>
-                <div className="d-flex flex-wrap gap-2 mb-4">
+                <h5 className="fw-bold mb-2" style={{ color: "#fff", fontSize: "0.85rem" }}>Payment Provider</h5>
+                <div className="d-flex flex-wrap gap-1 mb-2">
                   {paymentProviders.map((provider) => (
                     <button
                       key={provider.name}
                       onClick={() => setSelectedProvider(provider)}
                       style={{
-                        padding: "10px 20px",
-                        borderRadius: "12px",
-                        background: selectedProvider.name === provider.name
-                          ? `${provider.color}20`
-                          : "rgba(255,255,255,0.03)",
-                        border: selectedProvider.name === provider.name
-                          ? `1px solid ${provider.color}`
-                          : "1px solid rgba(255,255,255,0.08)",
+                        padding: "6px 14px", borderRadius: "10px",
+                        background: selectedProvider.name === provider.name ? `${provider.color}20` : "rgba(255,255,255,0.03)",
+                        border: selectedProvider.name === provider.name ? `1px solid ${provider.color}` : "1px solid rgba(255,255,255,0.08)",
                         color: selectedProvider.name === provider.name ? provider.color : "#87DEFA",
-                        fontWeight: 600,
-                        fontSize: "0.85rem",
-                        cursor: "pointer",
+                        fontWeight: 600, fontSize: "0.85rem", cursor: "pointer",
                         transition: "all 0.3s ease",
                       }}
                     >
@@ -276,94 +264,94 @@ return (
                   ))}
                 </div>
 
-                {/* Wallet Address */}
-                <h5 className="fw-bold mb-3" style={{ color: "#fff", fontSize: "0.95rem" }}>Wallet Address</h5>
-                <div className="d-flex align-items-center gap-2 p-3 rounded-3 mb-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                  <code style={{ color: "#00BFFF", fontSize: "0.8rem", wordBreak: "break-all", flex: 1 }}>{walletAddress}</code>
-                  <button
-                    onClick={() => { navigator.clipboard.writeText(walletAddress); }}
-                    className="btn btn-sm"
-                    style={{ color: "#00BFFF", border: "1px solid rgba(0,191,255,0.3)", borderRadius: "8px", flexShrink: 0 }}
-                  >
-                    Copy
-                  </button>
-                </div>
+                <button
+                  onClick={() => { setShowConfirmModal(true); setConfirmDone(false); setConfirmEmail(""); setConfirmTxid(""); }}
+                  className="btn w-100 py-2 fw-bold mt-2"
+                  style={{
+                    background: "linear-gradient(135deg, #00BFFF 0%, #E91E78 100%)",
+                    border: "none", color: "#fff", borderRadius: "12px",
+                    fontSize: "0.85rem", cursor: "pointer",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 0 20px rgba(0,191,255,0.3)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = "none"; }}
+                >
+                  Payment Made
+                </button>
+              </div>
 
-                {/* QR Code */}
-                <div className="text-center p-4 rounded-3" style={{ background: "rgba(255,255,255,0.03)", border: "1px dashed rgba(135,222,250,0.2)" }}>
-                  <div
-                      className="mx-auto mb-2"
-                      style={{
-                        width: 130,
-                        height: 130,
-                        background: "#fff",
-                        borderRadius: "12px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        padding: "8px",
-                      }}
-                    >
-                      <QRCodeSVG
-                        value={walletAddress}
-                        size={114}
-                        bgColor="#ffffff"
-                        fgColor="#000000"
-                        level="M"
-                      />
+              {/* Right: Address + QR side by side */}
+              <div className="col-md-5">
+                <div className="d-flex gap-3 align-items-start">
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <h5 className="fw-bold mb-2" style={{ color: "#fff", fontSize: "0.85rem" }}>Wallet Address</h5>
+                    <div className="p-2 rounded-3 mb-2" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                      <code style={{ color: "#00BFFF", fontSize: "0.75rem", wordBreak: "break-all", display: "block", marginBottom: "6px" }}>{walletAddress}</code>
+                      <button
+                        onClick={() => { navigator.clipboard.writeText(walletAddress); }}
+                        className="btn btn-sm"
+                        style={{ color: "#00BFFF", border: "1px solid rgba(0,191,255,0.3)", borderRadius: "8px", fontSize: "0.75rem", padding: "4px 12px" }}
+                      >
+                        Copy Address
+                      </button>
                     </div>
-                  <small style={{ color: "#87DEFA" }}>Scan to deposit</small>
-                  <p className="mt-3 mb-0" style={{ color: "#87DEFA", fontSize: "0.8rem", lineHeight: 1.5 }}>
-                    Once the funds are sent and the transaction is confirmed, your account balance will be credited automatically.
-                  </p>
-                  <button
-                    onClick={() => { setShowConfirmModal(true); setConfirmDone(false); setConfirmEmail(""); setConfirmTxid(""); }}
-                    className="btn w-100 mt-3 py-2 fw-bold"
-                    style={{
-                      background: "linear-gradient(135deg, #00BFFF 0%, #E91E78 100%)",
-                      border: "none",
-                      color: "#fff",
-                      borderRadius: "14px",
-                      fontSize: "0.95rem",
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 0 20px rgba(0,191,255,0.3)"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = "none"; }}
-                  >
-                    Payment Made
-                  </button>
+                    <p style={{ color: "#87DEFA", fontSize: "0.7rem", lineHeight: 1.4, margin: 0 }}>
+                      Send only {selectedCrypto.name} ({selectedCrypto.symbol}) to this address. Sending other coins may result in permanent loss.
+                    </p>
+                  </div>
+                  <div className="text-center" style={{ flexShrink: 0 }}>
+                    <div style={{
+                      width: 100, height: 100,
+                      background: "#fff", borderRadius: "10px",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      padding: "5px",
+                    }}>
+                      <QRCodeSVG value={walletAddress} size={90} bgColor="#ffffff" fgColor="#000000" level="M" />
+                    </div>
+                    <small style={{ color: "#87DEFA", fontSize: "0.65rem", display: "block", marginTop: "4px" }}>Scan to deposit</small>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Right - Deposit History */}
-            <div className="col-lg-5">
-              <div className="glass-card p-4 h-100" style={{ borderRadius: "20px" }}>
-                <h5 className="fw-bold mb-3" style={{ color: "#fff", fontSize: "0.95rem" }}>Deposit History</h5>
-                <div style={{ overflowX: "auto" }}>
-                  <table className="table table-dark table-borderless mb-0" style={{ fontSize: "0.85rem" }}>
-                    <thead>
-                      <tr style={{ color: "#87DEFA", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                        <th className="py-2">Date</th>
-                        <th className="py-2">Amount</th>
-                        <th className="py-2">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {depositHistory.map((deposit, i) => (
-                        <tr key={i} style={{ borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
-                          <td className="py-3" style={{ color: "#87DEFA" }}>{deposit.date}</td>
-                          <td className="py-3 fw-medium" style={{ color: "#fff" }}>{deposit.amount}</td>
-                          <td className="py-3">
-                            <span style={{ color: deposit.statusColor, fontWeight: 500 }}>{deposit.status}</span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+          {/* Deposit History Table */}
+          <div className="glass-card p-3 p-md-4 mt-3" style={{ borderRadius: "16px" }}>
+            <h5 className="fw-bold mb-3" style={{ color: "#fff", fontSize: "1rem" }}>Deposits History</h5>
+            <div style={{ overflowX: "auto" }}>
+              <table className="table table-dark table-borderless mb-0" style={{ fontSize: "0.85rem" }}>
+                <thead>
+                  <tr style={{ color: "#87DEFA", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                    <th className="py-2 ps-0">Amount</th>
+                    <th className="py-2">Status</th>
+                    <th className="py-2">Date</th>
+                    <th className="py-2 text-end pe-0">More</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {confirmDone ? (
+                    <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
+                      <td className="py-3 ps-0 fw-medium" style={{ color: "#fff" }}>{selectedCrypto.symbol}</td>
+                      <td className="py-3"><span style={{ color: "#00BFFF", fontWeight: 500 }}>Completed</span></td>
+                      <td className="py-3" style={{ color: "#87DEFA" }}>{new Date().toLocaleDateString()}</td>
+                      <td className="py-3 text-end pe-0">
+                        <button
+                          className="btn btn-sm"
+                          style={{ color: "#00BFFF", border: "1px solid rgba(0,191,255,0.2)", borderRadius: "8px", padding: "2px 10px", fontSize: "0.75rem", cursor: "pointer" }}
+                        >
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                  ) : (
+                    <tr>
+                      <td colSpan={4} className="text-center py-4" style={{ color: "#87DEFA", fontSize: "0.85rem" }}>
+                        You do not have deposits.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -490,6 +478,7 @@ return (
                         }),
                       });
                       setConfirmDone(true);
+                      onPaymentComplete?.();
                     } catch {
                       alert("Something went wrong. Please try again.");
                     } finally {
