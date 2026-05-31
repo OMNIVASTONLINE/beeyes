@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   description:
     "Answer 3 fun quiz questions for a chance to unlock exclusive rewards. Join the MrBeast interactive rewards challenge today!",
   keywords: ["rewards", "challenge", "quiz", "crypto", "prizes", "giveaway"],
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -23,9 +26,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      </head>
       <body>
         <AuthProvider>
           <Navbar />
