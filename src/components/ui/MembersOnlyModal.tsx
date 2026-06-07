@@ -118,15 +118,15 @@ export default function MembersOnlyModal({ show, onClose, onJoin }: MembersOnlyM
 
         <div
           style={{
-            width: 72,
-            height: 72,
+            width: "clamp(60px, 15vw, 72px)",
+            height: "clamp(60px, 15vw, 72px)",
             borderRadius: "50%",
             background: "linear-gradient(135deg, #a855f7 0%, #f59e0b 100%)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            margin: "0 auto 20px",
-            fontSize: "2rem",
+            margin: "0 auto 16px",
+            fontSize: "clamp(1.5rem, 5vw, 2rem)",
             boxShadow: "0 0 30px rgba(168, 85, 247, 0.3)",
           }}
         >
@@ -141,7 +141,7 @@ export default function MembersOnlyModal({ show, onClose, onJoin }: MembersOnlyM
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
-            fontSize: "clamp(1.25rem, 4vw, 1.5rem)",
+            fontSize: "clamp(1.1rem, 4vw, 1.5rem)",
           }}
         >
           You&rsquo;re not a member yet.
@@ -149,10 +149,10 @@ export default function MembersOnlyModal({ show, onClose, onJoin }: MembersOnlyM
 
         <p
           id="members-modal-desc"
-          className="mb-4"
+          className="mb-3 mb-md-4"
           style={{
             color: "#a78bfa",
-            fontSize: "0.95rem",
+            fontSize: "clamp(0.85rem, 2.5vw, 0.95rem)",
             lineHeight: 1.6,
           }}
         >
@@ -161,14 +161,14 @@ export default function MembersOnlyModal({ show, onClose, onJoin }: MembersOnlyM
 
         <div className="d-flex flex-column gap-2">
           <button
-            className="btn w-100 py-3 fw-bold"
+            className="btn w-100 py-2 py-md-3 fw-bold"
             onClick={onJoin}
             style={{
               background: "linear-gradient(135deg, #a855f7 0%, #f59e0b 100%)",
               border: "none",
               color: "#fff",
               borderRadius: "14px",
-              fontSize: "1rem",
+              fontSize: "clamp(0.85rem, 2.5vw, 1rem)",
               transition: "all 0.3s ease",
               cursor: "pointer",
             }}
@@ -192,7 +192,7 @@ export default function MembersOnlyModal({ show, onClose, onJoin }: MembersOnlyM
               border: "1px solid rgba(168, 85, 247, 0.25)",
               color: "#a78bfa",
               borderRadius: "14px",
-              fontSize: "0.95rem",
+              fontSize: "clamp(0.85rem, 2.5vw, 0.95rem)",
               fontWeight: 500,
               transition: "all 0.3s ease",
               cursor: "pointer",

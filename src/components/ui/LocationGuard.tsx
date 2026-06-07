@@ -39,8 +39,8 @@ export default function LocationGuard({ children }: { children: React.ReactNode 
           padding: "24px",
         }}
       >
-        <h1 style={{ color: "#E91E78", marginBottom: "16px" }}>Access Restricted</h1>
-        <p style={{ color: "#87DEFA", fontSize: "1.1rem", maxWidth: "500px" }}>
+        <h1 style={{ color: "#E91E78", marginBottom: "16px", fontSize: "clamp(1.5rem, 6vw, 2.5rem)" }}>Access Restricted</h1>
+        <p style={{ color: "#87DEFA", fontSize: "clamp(0.9rem, 3vw, 1.1rem)", maxWidth: "500px" }}>
           This website is only available in select countries.
         </p>
       </div>

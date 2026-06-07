@@ -64,7 +64,7 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <div className="d-flex align-items-center gap-2 ms-lg-3 mt-2 mt-lg-0">
+          <div className="d-flex align-items-center gap-2 ms-lg-3 mt-2 mt-lg-0 flex-wrap flex-sm-nowrap">
             {isLoggedIn ? (
               <>
                 <span
@@ -77,7 +77,7 @@ export default function Navbar() {
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
-                    maxWidth: "160px",
+                    maxWidth: "140px",
                   }}
                 >
                   {(profile?.display_name || (user?.user_metadata?.display_name as string) || user?.email)}

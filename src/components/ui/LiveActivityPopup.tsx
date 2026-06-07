@@ -30,6 +30,7 @@ export default function LiveActivityPopup() {
 
   return (
     <div
+      className="live-activity-popup"
       style={{
         position: "fixed",
         bottom: "100px",
@@ -42,9 +43,9 @@ export default function LiveActivityPopup() {
       }}
     >
       <div
-        className="glass-card d-flex align-items-center gap-2 px-3 py-1"
+        className="glass-card d-flex align-items-center gap-2 px-2 px-sm-3 py-1"
         style={{
-          minWidth: "300px",
+          minWidth: "280px",
           maxWidth: "360px",
           animation: visible ? "fadeInUp 0.5s ease" : "none",
         }}
@@ -69,8 +70,8 @@ export default function LiveActivityPopup() {
         </div>
 
         {/* Content */}
-        <div style={{ flex: 1 }}>
-          <p className="mb-0" style={{ fontSize: "0.85rem", lineHeight: 1.3 }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <p className="mb-0" style={{ fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)", lineHeight: 1.3 }}>
             <strong style={{ color: "#00BFFF" }}>{current.name}</strong>
             <span style={{ color: "#87DEFA" }}>
               {" "}from {current.city}, {current.state}{" "}

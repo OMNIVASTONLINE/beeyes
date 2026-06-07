@@ -42,11 +42,11 @@ export default function LoginPage() {
     <div style={{ paddingTop: "40px", paddingBottom: "40px", minHeight: "100dvh", background: "#0D1B2A" }}>
       <div className="container">
         <div className="text-center mb-5 pt-4 animate-fade-in-up">
-          <h1 className="fw-bold mb-2">
+          <h1 className="fw-bold mb-2" style={{ fontSize: "clamp(1.5rem, 6vw, 2.5rem)" }}>
             <span className="neon-text">Welcome</span>{" "}
             <span style={{ color: "#fff" }}>Back</span>
           </h1>
-          <p style={{ color: "#87DEFA", maxWidth: "450px", margin: "0 auto" }}>
+          <p style={{ color: "#87DEFA", maxWidth: "450px", margin: "0 auto", fontSize: "clamp(0.8rem, 2.5vw, 1rem)" }}>
             Sign in to your account to continue
           </p>
         </div>

@@ -76,7 +76,7 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
     <>
     <div className="container-fluid px-0" style={{ background: "#0D1B2A" }}>
       <div className="row g-0">
-        {/* Sidebar */}
+        {/* Sidebar - Desktop */}
         <div className="col-lg-2 d-none d-lg-flex flex-column" style={{ background: "#0A1628", borderRight: "1px solid rgba(0,191,255,0.1)", minHeight: "calc(100dvh - 72px)" }}>
           <div className="p-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
             <div style={{ color: "#87DEFA", fontSize: "0.75rem", marginBottom: "2px" }}>Account</div>
@@ -125,6 +125,42 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
           </div>
         </div>
 
+        {/* Mobile Sidebar - Horizontal scroll */}
+        <div className="d-lg-none" style={{ background: "#0A1628", borderBottom: "1px solid rgba(0,191,255,0.1)", overflowX: "auto", whiteSpace: "nowrap" }}>
+          <div className="d-flex gap-1 p-2" style={{ minWidth: "max-content" }}>
+            {sidebarItems.map((item) => {
+              const isDeposit = item.label === "Deposit";
+              const isDisabled = !isDeposit && !isMember && memberOnlyItems.includes(item.label);
+              return (
+                <button
+                  key={item.label}
+                  className="d-inline-flex align-items-center gap-1 rounded-3"
+                  onClick={() => {
+                    if (isDisabled) {
+                      setShowMemberModal(true);
+                    } else {
+                      setActiveSidebar(item.label);
+                    }
+                  }}
+                  style={{
+                    background: activeSidebar === item.label ? "rgba(0,212,255,0.15)" : "rgba(255,255,255,0.03)",
+                    border: activeSidebar === item.label ? "1px solid rgba(0,212,255,0.3)" : "1px solid transparent",
+                    color: activeSidebar === item.label ? "#00BFFF" : "#87DEFA",
+                    cursor: "pointer",
+                    padding: "6px 12px",
+                    fontSize: "0.8rem",
+                    transition: "all 0.3s ease",
+                    opacity: isDisabled ? 0.6 : 1,
+                  }}
+                >
+                  <span style={{ fontSize: "0.9rem" }}>{item.icon}</span>
+                  <span style={{ fontSize: "0.78rem" }}>{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Main Content */}
         <div className="col-lg-10 p-3 p-md-3 p-lg-4" style={{ minHeight: "calc(100dvh - 72px)" }}>
           <h3 className="fw-bold mb-0" style={{ fontSize: "1.3rem" }}>
@@ -135,30 +171,30 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
           </p>
 
           {/* Tabs */}
-          <div className="d-flex gap-2 mb-3">
+          <div className="d-flex gap-2 mb-3 flex-wrap">
             <button
-              className="btn rounded-pill px-4 py-2"
+              className="btn rounded-pill px-3 px-sm-4 py-2"
               onClick={() => setActiveTab("crypto")}
               style={{
                 background: activeTab === "crypto" ? "linear-gradient(135deg, #00BFFF 0%, #E91E78 100%)" : "rgba(255,255,255,0.05)",
                 border: activeTab === "crypto" ? "none" : "1px solid rgba(255,255,255,0.1)",
                 color: activeTab === "crypto" ? "#fff" : "#87DEFA",
                 fontWeight: 600,
-                fontSize: "0.9rem",
+                fontSize: "clamp(0.8rem, 2.5vw, 0.9rem)",
                 transition: "all 0.3s ease",
               }}
             >
               Crypto
             </button>
             <button
-              className="btn rounded-pill px-4 py-2"
+              className="btn rounded-pill px-3 px-sm-4 py-2"
               onClick={() => setActiveTab("card")}
               style={{
                 background: activeTab === "card" ? "linear-gradient(135deg, #00BFFF 0%, #E91E78 100%)" : "rgba(255,255,255,0.05)",
                 border: activeTab === "card" ? "none" : "1px solid rgba(255,255,255,0.1)",
                 color: activeTab === "card" ? "#fff" : "#87DEFA",
                 fontWeight: 600,
-                fontSize: "0.9rem",
+                fontSize: "clamp(0.8rem, 2.5vw, 0.9rem)",
                 transition: "all 0.3s ease",
               }}
             >
@@ -171,7 +207,7 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
             <div className="row g-3 align-items-start">
               {/* Left: Crypto Selection + Providers */}
               <div className="col-md-7">
-                <h5 className="fw-bold mb-2" style={{ color: "#fff", fontSize: "0.85rem" }}>Select Cryptocurrency</h5>
+                <h5 className="fw-bold mb-2" style={{ color: "#fff", fontSize: "clamp(0.8rem, 2.5vw, 0.85rem)" }}>Select Cryptocurrency</h5>
 
                 <div className="position-relative mb-3">
                   <button
@@ -184,18 +220,18 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
                       cursor: "pointer",
                     }}
                   >
-                    <div className="d-flex align-items-center gap-3">
+                    <div className="d-flex align-items-center gap-2 gap-sm-3">
                       <span style={{
-                        width: 36, height: 36, borderRadius: "50%",
+                        width: "clamp(30px, 8vw, 36px)", height: "clamp(30px, 8vw, 36px)", borderRadius: "50%",
                         background: `${selectedCrypto.color}20`, color: selectedCrypto.color,
                         display: "flex", alignItems: "center", justifyContent: "center",
-                        fontWeight: 700, fontSize: "1.1rem",
+                        fontWeight: 700, fontSize: "clamp(0.9rem, 3vw, 1.1rem)",
                       }}>
                         {selectedCrypto.icon}
                       </span>
                       <div style={{ textAlign: "left" }}>
-                        <div className="fw-bold" style={{ fontSize: "0.95rem" }}>{selectedCrypto.symbol}</div>
-                        <small style={{ color: "#87DEFA" }}>{selectedCrypto.name}</small>
+                        <div className="fw-bold" style={{ fontSize: "clamp(0.85rem, 2.5vw, 0.95rem)" }}>{selectedCrypto.symbol}</div>
+                        <small style={{ color: "#87DEFA", fontSize: "clamp(0.7rem, 2vw, 0.85rem)" }}>{selectedCrypto.name}</small>
                       </div>
                     </div>
                     <span style={{ transform: showDropdown ? "rotate(180deg)" : "none", transition: "0.3s" }}>▼</span>
@@ -209,12 +245,14 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
                         border: "1px solid rgba(0,191,255,0.15)",
                         zIndex: 100,
                         boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+                        maxHeight: "min(60dvh, 400px)",
+                        overflowY: "auto",
                       }}
                     >
                       {cryptoCurrencies.map((crypto) => (
                         <button
                           key={crypto.symbol}
-                          className="d-flex align-items-center gap-3 w-100 p-3"
+                          className="d-flex align-items-center gap-2 gap-sm-3 w-100 p-2 p-sm-3"
                           onClick={() => { setSelectedCrypto(crypto); setShowDropdown(false); }}
                           style={{
                             background: selectedCrypto.symbol === crypto.symbol ? "rgba(0,191,255,0.1)" : "transparent",
@@ -227,16 +265,16 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
                           }}
                         >
                           <span style={{
-                            width: 32, height: 32, borderRadius: "50%",
+                            width: "clamp(28px, 7vw, 32px)", height: "clamp(28px, 7vw, 32px)", borderRadius: "50%",
                             background: `${crypto.color}20`, color: crypto.color,
                             display: "flex", alignItems: "center", justifyContent: "center",
-                            fontWeight: 700,
+                            fontWeight: 700, fontSize: "clamp(0.75rem, 2vw, 0.9rem)",
                           }}>
                             {crypto.icon}
                           </span>
                           <div style={{ textAlign: "left" }}>
-                            <div style={{ fontSize: "0.9rem", fontWeight: 600 }}>{crypto.symbol}</div>
-                            <small style={{ color: "#87DEFA" }}>{crypto.name}</small>
+                            <div style={{ fontSize: "clamp(0.8rem, 2.5vw, 0.9rem)", fontWeight: 600 }}>{crypto.symbol}</div>
+                            <small style={{ color: "#87DEFA", fontSize: "clamp(0.65rem, 2vw, 0.8rem)" }}>{crypto.name}</small>
                           </div>
                         </button>
                       ))}
@@ -244,18 +282,18 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
                   )}
                 </div>
 
-                <h5 className="fw-bold mb-2" style={{ color: "#fff", fontSize: "0.85rem" }}>Payment Provider</h5>
+                <h5 className="fw-bold mb-2" style={{ color: "#fff", fontSize: "clamp(0.8rem, 2.5vw, 0.85rem)" }}>Payment Provider</h5>
                 <div className="d-flex flex-wrap gap-1 mb-2">
                   {paymentProviders.map((provider) => (
                     <button
                       key={provider.name}
                       onClick={() => setSelectedProvider(provider)}
                       style={{
-                        padding: "6px 14px", borderRadius: "10px",
+                        padding: "6px 12px", borderRadius: "10px",
                         background: selectedProvider.name === provider.name ? `${provider.color}20` : "rgba(255,255,255,0.03)",
                         border: selectedProvider.name === provider.name ? `1px solid ${provider.color}` : "1px solid rgba(255,255,255,0.08)",
                         color: selectedProvider.name === provider.name ? provider.color : "#87DEFA",
-                        fontWeight: 600, fontSize: "0.85rem", cursor: "pointer",
+                        fontWeight: 600, fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)", cursor: "pointer",
                         transition: "all 0.3s ease",
                       }}
                     >
@@ -266,11 +304,11 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
 
                 <button
                   onClick={() => { setShowConfirmModal(true); setConfirmDone(false); setConfirmEmail(""); setConfirmTxid(""); }}
-                  className="btn w-100 py-2 fw-bold mt-2"
+                  className="btn w-100 py-2 py-sm-3 fw-bold mt-2"
                   style={{
                     background: "linear-gradient(135deg, #00BFFF 0%, #E91E78 100%)",
                     border: "none", color: "#fff", borderRadius: "12px",
-                    fontSize: "0.85rem", cursor: "pointer",
+                    fontSize: "clamp(0.8rem, 2.5vw, 0.85rem)", cursor: "pointer",
                     transition: "all 0.3s ease",
                   }}
                   onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 0 20px rgba(0,191,255,0.3)"; }}
@@ -282,7 +320,7 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
 
               {/* Right: Address + QR side by side */}
               <div className="col-md-5">
-                <div className="d-flex gap-3 align-items-start">
+                <div className="d-flex flex-column flex-sm-row gap-3 align-items-start">
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <h5 className="fw-bold mb-2" style={{ color: "#fff", fontSize: "0.85rem" }}>Wallet Address</h5>
                     <div className="p-2 rounded-3 mb-2" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
@@ -299,14 +337,14 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
                       Send only {selectedCrypto.name} ({selectedCrypto.symbol}) to this address. Sending other coins may result in permanent loss.
                     </p>
                   </div>
-                  <div className="text-center" style={{ flexShrink: 0 }}>
+                  <div className="text-center" style={{ flexShrink: 0, alignSelf: "center" }}>
                     <div style={{
-                      width: 100, height: 100,
+                      width: "clamp(80px, 20vw, 100px)", height: "clamp(80px, 20vw, 100px)",
                       background: "#fff", borderRadius: "10px",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       padding: "5px",
                     }}>
-                      <QRCodeSVG value={walletAddress} size={90} bgColor="#ffffff" fgColor="#000000" level="M" />
+                      <QRCodeSVG value={walletAddress} size={70} bgColor="#ffffff" fgColor="#000000" level="M" />
                     </div>
                     <small style={{ color: "#87DEFA", fontSize: "0.65rem", display: "block", marginTop: "4px" }}>Scan to deposit</small>
                   </div>
@@ -317,9 +355,9 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
 
           {/* Deposit History Table */}
           <div className="glass-card p-3 p-md-4 mt-3" style={{ borderRadius: "16px" }}>
-            <h5 className="fw-bold mb-3" style={{ color: "#fff", fontSize: "1rem" }}>Deposits History</h5>
-            <div style={{ overflowX: "auto" }}>
-              <table className="table table-dark table-borderless mb-0" style={{ fontSize: "0.85rem" }}>
+            <h5 className="fw-bold mb-3" style={{ color: "#fff", fontSize: "clamp(0.9rem, 3vw, 1rem)" }}>Deposits History</h5>
+            <div className="table-responsive-custom">
+              <table className="table table-dark table-borderless mb-0" style={{ fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)" }}>
                 <thead>
                   <tr style={{ color: "#87DEFA", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                     <th className="py-2 ps-0">Amount</th>
@@ -384,26 +422,27 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
             }}
           >
             <div style={{
-              width: 64, height: 64, borderRadius: "50%",
+              width: "clamp(50px, 12vw, 64px)", height: "clamp(50px, 12vw, 64px)", borderRadius: "50%",
               background: "linear-gradient(135deg, #00BFFF 0%, #E91E78 100%)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              margin: "0 auto 20px", fontSize: "1.8rem",
+              margin: "0 auto 16px", fontSize: "clamp(1.3rem, 5vw, 1.8rem)",
             }}>
               {confirmDone ? "✅" : "💳"}
             </div>
 
             {confirmDone ? (
               <>
-                <h3 className="fw-bold text-center mb-2" style={{ color: "#fff" }}>Payment Confirmed!</h3>
-                <p className="text-center mb-4" style={{ color: "#87DEFA" }}>
+                <h3 className="fw-bold text-center mb-2" style={{ color: "#fff", fontSize: "clamp(1.1rem, 4vw, 1.5rem)" }}>Payment Confirmed!</h3>
+                <p className="text-center mb-4" style={{ color: "#87DEFA", fontSize: "clamp(0.8rem, 2.5vw, 0.95rem)" }}>
                   Your payment confirmation has been received. We&rsquo;ll credit your account once the transaction is verified.
                 </p>
                 <button
-                  className="btn w-100 py-3 fw-bold"
+                  className="btn w-100 py-2 py-md-3 fw-bold"
                   onClick={() => setShowConfirmModal(false)}
                   style={{
                     background: "linear-gradient(135deg, #00BFFF 0%, #E91E78 100%)",
                     border: "none", color: "#fff", borderRadius: "14px", cursor: "pointer",
+                    fontSize: "clamp(0.85rem, 2.5vw, 1rem)",
                   }}
                 >
                   Done
@@ -411,13 +450,13 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
               </>
             ) : (
               <>
-                <h3 className="fw-bold text-center mb-2" style={{ color: "#fff" }}>Confirm Payment</h3>
-                <p className="text-center mb-4" style={{ color: "#87DEFA", fontSize: "0.9rem" }}>
+                <h3 className="fw-bold text-center mb-2" style={{ color: "#fff", fontSize: "clamp(1.1rem, 4vw, 1.5rem)" }}>Confirm Payment</h3>
+                <p className="text-center mb-3 mb-md-4" style={{ color: "#87DEFA", fontSize: "clamp(0.8rem, 2.5vw, 0.9rem)" }}>
                   Let us know you&rsquo;ve sent the funds
                 </p>
 
                 <div className="mb-3">
-                  <label className="form-label fw-medium" style={{ color: "#87DEFA", fontSize: "0.85rem" }}>Your Email</label>
+                  <label className="form-label fw-medium" style={{ color: "#87DEFA", fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)" }}>Your Email</label>
                   <input
                     type="email"
                     className="form-control"
@@ -426,13 +465,14 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
                     placeholder="you@example.com"
                     style={{
                       background: "rgba(255,255,255,0.05)", border: "1px solid rgba(0,191,255,0.2)",
-                      color: "#fff", borderRadius: "12px", padding: "12px 16px",
+                      color: "#fff", borderRadius: "12px", padding: "10px 14px",
+                      fontSize: "clamp(0.8rem, 2.5vw, 0.95rem)",
                     }}
                   />
                 </div>
 
                 <div className="mb-3">
-                  <label className="form-label fw-medium" style={{ color: "#87DEFA", fontSize: "0.85rem" }}>Transaction Time</label>
+                  <label className="form-label fw-medium" style={{ color: "#87DEFA", fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)" }}>Transaction Time</label>
                   <input
                     type="text"
                     className="form-control"
@@ -440,13 +480,14 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
                     readOnly
                     style={{
                       background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
-                      color: "#87DEFA", borderRadius: "12px", padding: "12px 16px",
+                      color: "#87DEFA", borderRadius: "12px", padding: "10px 14px",
+                      fontSize: "clamp(0.8rem, 2.5vw, 0.95rem)",
                     }}
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label className="form-label fw-medium" style={{ color: "#87DEFA", fontSize: "0.85rem" }}>
+                <div className="mb-3 mb-md-4">
+                  <label className="form-label fw-medium" style={{ color: "#87DEFA", fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)" }}>
                     TXID <span style={{ color: "rgba(255,255,255,0.3)" }}>(optional)</span>
                   </label>
                   <input
@@ -457,7 +498,8 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
                     placeholder="Transaction ID"
                     style={{
                       background: "rgba(255,255,255,0.05)", border: "1px solid rgba(0,191,255,0.2)",
-                      color: "#fff", borderRadius: "12px", padding: "12px 16px",
+                      color: "#fff", borderRadius: "12px", padding: "10px 14px",
+                      fontSize: "clamp(0.8rem, 2.5vw, 0.95rem)",
                     }}
                   />
                 </div>
@@ -486,11 +528,12 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
                     }
                   }}
                   disabled={!confirmEmail || confirmLoading}
-                  className="btn w-100 py-3 fw-bold"
+                  className="btn w-100 py-2 py-md-3 fw-bold"
                   style={{
                     background: !confirmEmail ? "rgba(255,255,255,0.1)" : "linear-gradient(135deg, #00BFFF 0%, #E91E78 100%)",
                     border: "none", color: "#fff", borderRadius: "14px", cursor: !confirmEmail ? "not-allowed" : "pointer",
                     opacity: !confirmEmail ? 0.5 : 1,
+                    fontSize: "clamp(0.85rem, 2.5vw, 1rem)",
                   }}
                 >
                   {confirmLoading ? "Submitting..." : "Submit Confirmation"}
@@ -502,6 +545,7 @@ export default function PaymentDashboard({ onPaymentComplete }: PaymentDashboard
                   style={{
                     background: "transparent", border: "1px solid rgba(255,255,255,0.1)",
                     color: "#87DEFA", borderRadius: "14px", cursor: "pointer",
+                    fontSize: "clamp(0.85rem, 2.5vw, 0.95rem)",
                   }}
                 >
                   Cancel

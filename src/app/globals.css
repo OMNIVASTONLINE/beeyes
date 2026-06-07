@@ -144,6 +144,143 @@ body::before {
   }
 }
 
+/* ===== Responsive Utilities ===== */
+@media (max-width: 576px) {
+  html {
+    font-size: 14px;
+  }
+
+  h1.display-3,
+  .hero-heading {
+    font-size: 2.2rem !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  h1.display-4 {
+    font-size: 2rem !important;
+  }
+
+  .container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .btn-neon,
+  .btn-neon-outline {
+    font-size: 0.85rem !important;
+    padding: 10px 22px !important;
+  }
+
+  .glass-card {
+    border-radius: 12px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  h1.display-3,
+  .hero-heading {
+    font-size: 1.8rem !important;
+  }
+
+  .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+
+/* Ensure no horizontal overflow */
+img,
+video,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fix for 100vh on mobile (addresses browser chrome) */
+.min-vh-100-mobile {
+  min-height: 100dvh;
+}
+
+/* Responsive stats row */
+.stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.stats-row > * {
+  flex: 1;
+  min-width: 100px;
+}
+
+@media (max-width: 576px) {
+  .stats-row {
+    gap: 0.75rem;
+  }
+
+  .stats-row > * {
+    min-width: 80px;
+  }
+}
+
+/* Better table responsiveness */
+.table-responsive-custom {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Navbar mobile improvements */
+@media (max-width: 991.98px) {
+  .navbar .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .navbar-collapse {
+    background: rgba(10, 10, 26, 0.98);
+    backdrop-filter: blur(20px);
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 8px;
+    border: 1px solid rgba(0, 191, 255, 0.1);
+    max-height: 80dvh;
+    overflow-y: auto;
+  }
+}
+
+/* Fix mobile modal padding */
+@media (max-width: 576px) {
+  .modal-content-custom {
+    padding: 20px !important;
+  }
+}
+
+/* Quiz progress bar fix */
+@media (max-width: 576px) {
+  .quiz-option {
+    font-size: 0.9rem !important;
+    padding: 12px !important;
+  }
+
+  .quiz-option-circle {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0.75rem !important;
+    margin-right: 10px !important;
+  }
+}
+
+/* Live activity popup mobile */
+@media (max-width: 576px) {
+  .live-activity-popup {
+    left: 12px !important;
+    bottom: 90px !important;
+    max-width: calc(100vw - 24px) !important;
+    min-width: unset !important;
+    width: auto !important;
+  }
+}
+
 /* Animations */
 @keyframes fadeInUp {
   from {

@@ -1,19 +1,19 @@
 export default function PrivacyPage() {
   return (
-    <div className="section-padding" style={{ minHeight: "100vh", background: "#0D1B2A" }}>
-      <div className="container py-5">
+    <div className="section-padding" style={{ minHeight: "100dvh", background: "#0D1B2A" }}>
+      <div className="container py-4 py-md-5">
         <div className="mb-5 animate-fade-in-up">
-          <h1 className="fw-bold mb-2">
+          <h1 className="fw-bold mb-2" style={{ fontSize: "clamp(1.5rem, 6vw, 2.5rem)" }}>
             <span className="neon-text">Privacy</span>{" "}
             <span style={{ color: "#fff" }}>Policy</span>
           </h1>
-          <p style={{ color: "var(--text-muted)" }}>Effective Date: 2026</p>
+          <p style={{ color: "var(--text-muted)", fontSize: "clamp(0.8rem, 2.5vw, 1rem)" }}>Effective Date: 2026</p>
         </div>
 
-        <div style={{ color: "#ccc", lineHeight: 1.8, maxWidth: "800px" }}>
+        <div style={{ color: "#ccc", lineHeight: 1.8, maxWidth: "800px", fontSize: "clamp(0.85rem, 2.5vw, 1rem)" }}>
           <p>This Privacy Policy explains how we collect, use, and protect your information.</p>
 
-          <h3 className="mt-5 mb-3" style={{ color: "#00BFFF" }}>1. Information We Collect</h3>
+          <h3 className="mt-4 mt-md-5 mb-3" style={{ color: "#00BFFF", fontSize: "clamp(1rem, 3.5vw, 1.25rem)" }}>1. Information We Collect</h3>
           <p>We may collect:</p>
           <ul>
             <li>Name</li>
@@ -25,7 +25,7 @@ export default function PrivacyPage() {
             <li>Quiz participation and reward activity</li>
           </ul>
 
-          <h3 className="mt-5 mb-3" style={{ color: "#00BFFF" }}>2. How We Use Information</h3>
+          <h3 className="mt-4 mt-md-5 mb-3" style={{ color: "#00BFFF", fontSize: "clamp(1rem, 3.5vw, 1.25rem)" }}>2. How We Use Information</h3>
           <p>We use your information to:</p>
           <ul>
             <li>Provide access to the Platform</li>
@@ -35,12 +35,12 @@ export default function PrivacyPage() {
             <li>Send updates and promotional messages</li>
           </ul>
 
-          <h3 className="mt-5 mb-3" style={{ color: "#00BFFF" }}>3. Cookies &amp; Tracking</h3>
+          <h3 className="mt-4 mt-md-5 mb-3" style={{ color: "#00BFFF", fontSize: "clamp(1rem, 3.5vw, 1.25rem)" }}>3. Cookies &amp; Tracking</h3>
           <ul>
             <li>We use cookies and analytics tools to improve performance and personalize content.</li>
           </ul>
 
-          <h3 className="mt-5 mb-3" style={{ color: "#00BFFF" }}>4. Data Sharing</h3>
+          <h3 className="mt-4 mt-md-5 mb-3" style={{ color: "#00BFFF", fontSize: "clamp(1rem, 3.5vw, 1.25rem)" }}>4. Data Sharing</h3>
           <p>We do not sell personal data. We may share information with:</p>
           <ul>
             <li>Payment processors</li>
@@ -49,13 +49,13 @@ export default function PrivacyPage() {
             <li>Legal authorities when required by law</li>
           </ul>
 
-          <h3 className="mt-5 mb-3" style={{ color: "#00BFFF" }}>5. Data Security</h3>
+          <h3 className="mt-4 mt-md-5 mb-3" style={{ color: "#00BFFF", fontSize: "clamp(1rem, 3.5vw, 1.25rem)" }}>5. Data Security</h3>
           <ul>
             <li>We implement industry-standard security measures to protect your data.</li>
             <li>No system is completely secure, and we cannot guarantee absolute security.</li>
           </ul>
 
-          <h3 className="mt-5 mb-3" style={{ color: "#00BFFF" }}>6. User Rights</h3>
+          <h3 className="mt-4 mt-md-5 mb-3" style={{ color: "#00BFFF", fontSize: "clamp(1rem, 3.5vw, 1.25rem)" }}>6. User Rights</h3>
           <p>Depending on your jurisdiction, you may have the right to:</p>
           <ul>
             <li>Access your data</li>
@@ -64,17 +64,17 @@ export default function PrivacyPage() {
             <li>Opt out of marketing communications</li>
           </ul>
 
-          <h3 className="mt-5 mb-3" style={{ color: "#00BFFF" }}>7. Third-Party Links</h3>
+          <h3 className="mt-4 mt-md-5 mb-3" style={{ color: "#00BFFF", fontSize: "clamp(1rem, 3.5vw, 1.25rem)" }}>7. Third-Party Links</h3>
           <ul>
             <li>The Platform may contain links to external websites. We are not responsible for their privacy practices.</li>
           </ul>
 
-          <h3 className="mt-5 mb-3" style={{ color: "#00BFFF" }}>8. Children&rsquo;s Privacy</h3>
+          <h3 className="mt-4 mt-md-5 mb-3" style={{ color: "#00BFFF", fontSize: "clamp(1rem, 3.5vw, 1.25rem)" }}>8. Children&rsquo;s Privacy</h3>
           <ul>
             <li>The Platform is not intended for children under 13.</li>
           </ul>
 
-          <h3 className="mt-5 mb-3" style={{ color: "#00BFFF" }}>9. Updates</h3>
+          <h3 className="mt-4 mt-md-5 mb-3" style={{ color: "#00BFFF", fontSize: "clamp(1rem, 3.5vw, 1.25rem)" }}>9. Updates</h3>
           <ul>
             <li>We may revise this Privacy Policy from time to time.</li>
           </ul>

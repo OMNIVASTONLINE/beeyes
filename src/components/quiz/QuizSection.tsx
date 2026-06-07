@@ -75,10 +75,10 @@ export default function QuizSection({ onComplete }: QuizSectionProps) {
           <div className="col-lg-8 col-xl-6">
             {/* Progress */}
             <div className="d-flex align-items-center justify-content-between mb-3">
-              <small style={{ color: "#87DEFA" }}>
+              <small style={{ color: "#87DEFA", fontSize: "clamp(0.75rem, 2.5vw, 0.875rem)" }}>
                 Question {currentQ + 1} of {quizQuestions.length}
               </small>
-              <small style={{ color: timeLeft <= 5 ? "#E91E78" : "#87DEFA", fontWeight: timeLeft <= 5 ? 700 : 400 }}>
+              <small style={{ color: timeLeft <= 5 ? "#E91E78" : "#87DEFA", fontWeight: timeLeft <= 5 ? 700 : 400, fontSize: "clamp(0.75rem, 2.5vw, 0.875rem)" }}>
                 ⏱ {timeLeft}s
               </small>
             </div>
@@ -96,7 +96,7 @@ export default function QuizSection({ onComplete }: QuizSectionProps) {
 
             {/* Question Card */}
             <div
-              className="glass-card p-4 p-md-5"
+              className="glass-card p-3 p-md-5"
               style={{
                 borderRadius: "20px",
                 opacity: isAnimating ? 0 : 1,
@@ -104,11 +104,11 @@ export default function QuizSection({ onComplete }: QuizSectionProps) {
                 transition: "all 0.3s ease",
               }}
             >
-              <h4 className="fw-bold mb-4" style={{ color: "#fff", lineHeight: 1.4 }}>
+              <h4 className="fw-bold mb-4" style={{ color: "#fff", lineHeight: 1.4, fontSize: "clamp(1rem, 3.5vw, 1.5rem)" }}>
                 {question.question}
               </h4>
 
-              <div className="d-flex flex-column gap-3">
+              <div className="d-flex flex-column gap-2 gap-sm-3">
                 {question.options.map((opt, idx) => {
                   let bg = "rgba(255,255,255,0.03)";
                   let border = "rgba(255,255,255,0.08)";
@@ -133,7 +133,7 @@ export default function QuizSection({ onComplete }: QuizSectionProps) {
                   return (
                     <button
                       key={idx}
-                      className="d-flex align-items-center p-3 rounded-3"
+                      className="d-flex align-items-center p-2 p-sm-3 rounded-3 quiz-option"
                       onClick={() => handleAnswer(idx)}
                       disabled={answered}
                       style={{
@@ -142,7 +142,7 @@ export default function QuizSection({ onComplete }: QuizSectionProps) {
                         color: color,
                         cursor: answered ? "default" : "pointer",
                         transition: "all 0.3s ease",
-                        fontSize: "1rem",
+                        fontSize: "clamp(0.85rem, 2.5vw, 1rem)",
                         textAlign: "left",
                       }}
                       onMouseEnter={(e) => {
@@ -159,21 +159,21 @@ export default function QuizSection({ onComplete }: QuizSectionProps) {
                       }}
                     >
                       <span
-                        className="d-flex align-items-center justify-content-center me-3"
+                        className="d-flex align-items-center justify-content-center me-2 me-sm-3 quiz-option-circle"
                         style={{
-                          width: 32,
-                          height: 32,
+                          width: "clamp(28px, 6vw, 32px)",
+                          height: "clamp(28px, 6vw, 32px)",
                           borderRadius: "50%",
                           background: idx === selected && showResult ? bg : "rgba(255,255,255,0.05)",
                           border: `1px solid ${border}`,
-                          fontSize: "0.85rem",
+                          fontSize: "clamp(0.75rem, 2vw, 0.85rem)",
                           fontWeight: 600,
                           flexShrink: 0,
                         }}
                       >
                         {String.fromCharCode(65 + idx)}
                       </span>
-                      {opt}
+                      <span style={{ flex: 1 }}>{opt}</span>
                     </button>
                   );
                 })}

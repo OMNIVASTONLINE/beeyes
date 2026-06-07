@@ -104,31 +104,29 @@ export default function CompletionModal({ show, onContinue }: CompletionModalPro
 
           <div
             style={{
-              width: 80,
-              height: 80,
+              width: "clamp(60px, 15vw, 80px)",
+              height: "clamp(60px, 15vw, 80px)",
               borderRadius: "50%",
               background: "linear-gradient(135deg, #00BFFF 0%, #E91E78 100%)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              margin: "0 auto 20px",
-              fontSize: "2.5rem",
+              margin: "0 auto 16px",
+              fontSize: "clamp(1.8rem, 6vw, 2.5rem)",
               animation: "pulse-glow 2s ease-in-out infinite",
             }}
           >
             🎉
           </div>
 
-          <h2 className="fw-bold mb-2" style={{ color: "#fff" }}>
+          <h2 className="fw-bold mb-2" style={{ color: "#fff", fontSize: "clamp(1.2rem, 5vw, 1.75rem)" }}>
             Congratulations!
           </h2>
-          <p className="mb-3" style={{ color: "#87DEFA", fontSize: "1rem" }}>
+          <p className="mb-3" style={{ color: "#87DEFA", fontSize: "clamp(0.85rem, 2.5vw, 1rem)" }}>
             You completed the challenge successfully.
           </p>
 
-          
-
-          <button className="btn btn-neon w-100 py-3" onClick={onContinue}>
+          <button className="btn btn-neon w-100 py-2 py-md-3" style={{ fontSize: "clamp(0.85rem, 2.5vw, 1rem)" }} onClick={onContinue}>
             Continue
           </button>
         </div>

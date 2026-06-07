@@ -9,7 +9,7 @@ export default function MainContent({ children }: { children: ReactNode }) {
   return (
     <main
       style={{
-        paddingTop: isLoggedIn ? "124px" : "72px",
+        paddingTop: isLoggedIn ? "clamp(110px, 15vw, 124px)" : "clamp(62px, 10vw, 72px)",
         position: "relative",
         zIndex: 1,
       }}

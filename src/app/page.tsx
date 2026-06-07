@@ -72,11 +72,11 @@ export default function HomePage() {
         <div id="signup" className="section-padding" style={{ background: "#0D1B2A", paddingTop: "40px", paddingBottom: "40px" }}>
           <div className="container">
             <div className="text-center mb-3 animate-fade-in-up">
-              <h2 className="fw-bold mb-1" style={{ fontSize: "1.5rem" }}>
+              <h2 className="fw-bold mb-1" style={{ fontSize: "clamp(1.2rem, 5vw, 1.5rem)" }}>
                 <span className="neon-text">Create</span>{" "}
                 <span style={{ color: "#fff" }}>Your Account</span>
               </h2>
-              <p style={{ color: "#87DEFA", fontSize: "0.85rem" }}>
+              <p style={{ color: "#87DEFA", fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)" }}>
                 Join now to claim your rewards
               </p>
             </div>
@@ -103,13 +103,13 @@ export default function HomePage() {
 
       <div id="features" className="section-padding" style={{ background: "#0D1B2A" }}>
         <div className="container">
-          <div className="text-center mb-5 animate-fade-in-up">
-            <h2 className="fw-bold mb-2">
+          <div className="text-center mb-4 animate-fade-in-up">
+            <h2 className="fw-bold mb-2" style={{ fontSize: "clamp(1.3rem, 5vw, 2rem)" }}>
               <span style={{ color: "#fff" }}>Why Join</span>{" "}
               <span className="neon-text">MrBeast?</span>
             </h2>
           </div>
-          <div className="row g-4">
+          <div className="row g-3 g-lg-4">
             {[
               { emoji: "🎯", title: "Fun Challenges", desc: "Engaging trivia across crypto, tech, and more" },
               { emoji: "💰", title: "Real Rewards", desc: "Win exclusive prizes and crypto rewards" },
@@ -119,10 +119,10 @@ export default function HomePage() {
               { emoji: "📱", title: "Mobile First", desc: "Seamless experience on any device" },
             ].map((item, i) => (
               <div key={i} className="col-md-6 col-lg-4 animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
-                <div className="glass-card p-4 h-100" style={{ borderRadius: "16px" }}>
-                  <div style={{ fontSize: "2rem", marginBottom: "0.75rem" }}>{item.emoji}</div>
-                  <h5 className="fw-bold mb-1" style={{ color: "#00BFFF" }}>{item.title}</h5>
-                  <p className="mb-0" style={{ color: "#87DEFA", fontSize: "0.9rem" }}>{item.desc}</p>
+                <div className="glass-card p-3 p-md-4 h-100" style={{ borderRadius: "16px" }}>
+                  <div style={{ fontSize: "clamp(1.5rem, 5vw, 2rem)", marginBottom: "0.5rem" }}>{item.emoji}</div>
+                  <h5 className="fw-bold mb-1" style={{ color: "#00BFFF", fontSize: "clamp(0.9rem, 3vw, 1.1rem)" }}>{item.title}</h5>
+                  <p className="mb-0" style={{ color: "#87DEFA", fontSize: "clamp(0.8rem, 2.5vw, 0.9rem)" }}>{item.desc}</p>
                 </div>
               </div>
             ))}

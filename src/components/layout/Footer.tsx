@@ -35,8 +35,8 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <div className="text-center mt-4 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-          <img src="/partner.png" alt="Partners" style={{ height: "80px", width: "auto", opacity: 0.8 }} />
+        <div className="text-center mt-3 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+          <img src="/partner.png" alt="Partners" style={{ height: "clamp(50px, 10vw, 80px)", width: "auto", opacity: 0.8, maxWidth: "100%" }} />
         </div>
       </div>
     </footer>

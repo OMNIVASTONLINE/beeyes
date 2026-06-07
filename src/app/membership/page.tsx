@@ -18,7 +18,7 @@ export default function MembershipPage() {
   };
 
   return (
-    <div style={{ minHeight: "100dvh", background: "#0D1B2A", display: "flex", alignItems: "flex-start", paddingTop: "5vh" }}>
+    <div style={{ minHeight: "100dvh", background: "#0D1B2A", display: "flex", alignItems: "flex-start", paddingTop: "3vh", paddingBottom: "20px" }}>
       <MembershipCard onSelect={handleSelect} />
     </div>
   );

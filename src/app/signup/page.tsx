@@ -25,11 +25,11 @@ export default function SignupPage() {
     <div style={{ paddingTop: "40px", paddingBottom: "40px", minHeight: "100dvh", background: "#0D1B2A" }}>
       <div className="container">
         <div className="text-center mb-3 pt-2 animate-fade-in-up">
-          <h1 className="fw-bold mb-1" style={{ fontSize: "1.6rem" }}>
+          <h1 className="fw-bold mb-1" style={{ fontSize: "clamp(1.3rem, 5vw, 1.6rem)" }}>
             <span className="neon-text">Create</span>{" "}
             <span style={{ color: "#fff" }}>Your Account</span>
           </h1>
-          <p style={{ color: "#87DEFA", fontSize: "0.85rem", maxWidth: "380px", margin: "0 auto" }}>
+          <p style={{ color: "#87DEFA", fontSize: "clamp(0.75rem, 2.5vw, 0.85rem)", maxWidth: "380px", margin: "0 auto" }}>
             Join MrBeast and unlock exclusive rewards and challenges
           </p>
         </div>

@@ -6,9 +6,9 @@ interface HeroSectionProps {
 
 export default function HeroSection({ onStartChallenge }: HeroSectionProps) {
   return (
-    <section className="section-padding d-flex align-items-center" style={{ minHeight: "100vh", paddingTop: "100px", background: "#0D1B2A" }}>
+    <section className="section-padding d-flex align-items-center" style={{ minHeight: "100dvh", paddingTop: "100px", paddingBottom: "40px", background: "#0D1B2A" }}>
       <div className="container">
-        <div className="row align-items-center g-5">
+        <div className="row align-items-center g-4 g-lg-5">
           <div className="col-lg-7 animate-fade-in-up">
             <div className="mb-3">
               <span
@@ -25,7 +25,7 @@ export default function HeroSection({ onStartChallenge }: HeroSectionProps) {
             </div>
 
             <h1
-              className="display-3 fw-bold mb-4"
+              className="display-3 fw-bold mb-4 hero-heading"
               style={{ lineHeight: 1.15, letterSpacing: "-0.02em" }}
             >
               <span className="neon-text">Interactive</span>
@@ -36,12 +36,12 @@ export default function HeroSection({ onStartChallenge }: HeroSectionProps) {
 
             <p
               className="lead mb-4"
-              style={{ color: "var(--text-secondary)", fontSize: "1.15rem", maxWidth: "530px" }}
+              style={{ color: "var(--text-secondary)", fontSize: "clamp(0.95rem, 3vw, 1.15rem)", maxWidth: "530px" }}
             >
               Answer 3 fun quiz questions to unlock $2500 Welcome Bonus
             </p>
 
-            <div className="d-flex flex-wrap gap-3">
+            <div className="d-flex flex-wrap gap-2 gap-sm-3">
               <button className="btn btn-neon btn-lg" onClick={onStartChallenge}>
                 <span className="d-flex align-items-center gap-2">
                   Start Challenge
@@ -59,18 +59,18 @@ export default function HeroSection({ onStartChallenge }: HeroSectionProps) {
             </div>
 
             {/* Stats */}
-            <div className="d-flex gap-4 mt-5 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+            <div className="stats-row mt-4 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
               <div>
-                <h3 className="fw-bold mb-0" style={{ color: "#00BFFF" }}>12K+</h3>
-                <small style={{ color: "var(--text-muted)" }}>Participants</small>
+                <h3 className="fw-bold mb-0" style={{ color: "#00BFFF", fontSize: "clamp(1.2rem, 4vw, 1.75rem)" }}>12K+</h3>
+                <small style={{ color: "var(--text-muted)", fontSize: "clamp(0.7rem, 2.5vw, 0.85rem)" }}>Participants</small>
               </div>
               <div>
-                <h3 className="fw-bold mb-0" style={{ color: "#E91E78" }}>$50K+</h3>
-                <small style={{ color: "var(--text-muted)" }}>Rewards Given</small>
+                <h3 className="fw-bold mb-0" style={{ color: "#E91E78", fontSize: "clamp(1.2rem, 4vw, 1.75rem)" }}>$50K+</h3>
+                <small style={{ color: "var(--text-muted)", fontSize: "clamp(0.7rem, 2.5vw, 0.85rem)" }}>Rewards Given</small>
               </div>
               <div>
-                <h3 className="fw-bold mb-0" style={{ color: "#E91E78" }}>98%</h3>
-                <small style={{ color: "var(--text-muted)" }}>Satisfaction</small>
+                <h3 className="fw-bold mb-0" style={{ color: "#E91E78", fontSize: "clamp(1.2rem, 4vw, 1.75rem)" }}>98%</h3>
+                <small style={{ color: "var(--text-muted)", fontSize: "clamp(0.7rem, 2.5vw, 0.85rem)" }}>Satisfaction</small>
               </div>
             </div>
           </div>

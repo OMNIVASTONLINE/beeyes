@@ -28,17 +28,17 @@ export default function TestimonialSection() {
   return (
     <div className="section-padding" style={{ background: "#0D1B2A" }}>
       <div className="container">
-        <div className="text-center mb-5 animate-fade-in-up">
-          <h2 className="fw-bold mb-3">
+        <div className="text-center mb-4 animate-fade-in-up">
+          <h2 className="fw-bold mb-3" style={{ fontSize: "clamp(1.3rem, 5vw, 2rem)" }}>
             <span className="neon-text">Previous Challenge</span>{" "}
             <span style={{ color: "#fff" }}>Winners</span>
           </h2>
-          <p style={{ color: "#87DEFA", maxWidth: "500px", margin: "0 auto" }}>
+          <p style={{ color: "#87DEFA", maxWidth: "500px", margin: "0 auto", fontSize: "clamp(0.85rem, 2.5vw, 1rem)" }}>
             See what past winners have to say about their experience
           </p>
         </div>
 
-        <div className="row g-4">
+        <div className="row g-3 g-lg-4">
           {testimonials.map((testimonial, i) => (
             <div
               key={testimonial.id}
